@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="instructions">
+			<ol>
+				<li>
+					Change the <code>10</code>, next to the <code>TODO</code> comment, so that an estimate of the mathematical constant PI is calculated.<br/>
+					<strong>DO NOT CHANGE ANYTHING FOR THIS STEP OTHER THAN THIS <code>10</code></strong>
+				</li>
+				<br/>
+				<li>
+					Generalize the code further so it produces the following output;<br/>
+					<code>(***)</code> should be replaced by the actual estimate.<br/>
+					Modify the code as little and as elegantly as possible.
+				</li>
+			</ol>
+		</div>
+		<!-- NOTHING TO CHANGE ABOVE THIS LINE -->
+		<div id="app">
+			<!-- Dropdown menu to select the number of bars -->
+			<label for="bars">Select number of bars: </label>
+			<select id="bars" v-model="numberOfBars">
+				<option value="30">30</option>
+				<option value="60">60</option>
+				<option value="90">90</option>
+			</select>
+
+			<div style="clear: left">
+				<div 
+					v-for="(y, i) in bars()"
+					:key="i"
+					:style="{ width: scale, height: numberOfBars * scale, float: 'left', borderTop: (y * scale) + 'px solid blue' }"
+				>
+				</div>
+				<p>Number of bars = {{ numberOfBars }}</p>
+				PI = {{ (bars().reduce((a, b) => a + b, 0) * 4 / (numberOfBars * numberOfBars)).toFixed(3) }}
+				<!--PI = {{ bars().reduce((a, b) => 10 /* TODO: replace "10" with correct expression */, 0) }} -->
+			</div>
+		</div>
+
+		
+
+		<script>
+		const app = new Vue({
+			el: '#app',
+			methods: {
+				bars () {
+					const bars = []
+					for (let i = 0; i < this.numberOfBars; i++) {
+						bars.push(Math.sqrt(this.numberOfBars * this.numberOfBars - i * i))
+					}
+					return bars
+				},
+			},
+			data () {
+				return {
+					scale: 2,
+					numberOfBars: 30, // Default to 30 bars
+				}
+			},
+		})
+		</script>
+	</body>
+</html>
